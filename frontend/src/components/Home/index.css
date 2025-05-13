@@ -3,26 +3,14 @@
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #1f2937; /* gray-800 */
+  background: #f9fafb; /* gray-50 */
 }
 
 .leaflet-container {
   height: 100%;
   width: 100%;
-}
-
-.leaflet-popup-content-wrapper {
-  border-radius: 8px;
-  padding: 0;
-}
-
-.leaflet-popup-content {
-  margin: 0;
-  width: 280px !important;
-}
-
-.leaflet-popup-tip {
-  background-color: white;
 }
 
 @keyframes fadeIn {
