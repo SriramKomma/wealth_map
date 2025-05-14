@@ -8,11 +8,18 @@ import {
 } from "react-router-dom";
 import Login from "./components/Login";
 import Home from "./components/Home";
+import axios from "axios";
+import { Toaster } from "react-hot-toast";
+
+axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.withCredentials = true;
 
 function App() {
   const [user, setUser] = useState(null);
 
   return (
+    <>
+    <Toaster position="bottom-right" toastOptions={{duration:2000}}/>
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <div className="App">
         <Routes>
@@ -25,6 +32,8 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </>
+    
   );
 }
 
