@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useEffect } from "react";
 import logo from "./logo.svg";
 import LoginForm from "./LoginForm";
-import SignUpForm from "./SignUpForm";
 
-const Login = ({ setUser }) => {
-  const [isSignUp, setIsSignUp] = useState(false);
+const Login = ({ setUser, user }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
 
   const handleGoogleSuccess = (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
     setUser(decoded);
+    localStorage.setItem("user", JSON.stringify(decoded));
     navigate("/home");
   };
 
@@ -25,22 +31,14 @@ const Login = ({ setUser }) => {
       {/* Left Section */}
       <div className="flex flex-col justify-center items-center px-4">
         <div className="text-center space-y-4 pt-12">
-          <h1 className="text-3xl font-bold text-[#2E2A47]">
-            {isSignUp ? "Create Your Account" : "Welcome Back!!"}
-          </h1>
+          <h1 className="text-3xl font-bold text-[#2E2A47]">Welcome Back!!</h1>
           <p className="text-[#7E8CA0] text-base">
-            {isSignUp
-              ? "Register to start using the dashboard."
-              : "Log in or create account to get back to your dashboard!"}
+            Log in to access your dashboard.
           </p>
         </div>
 
         <div className="w-full max-w-sm mt-8">
-          {isSignUp ? (
-            <SignUpForm setUser={setUser} />
-          ) : (
-            <LoginForm setUser={setUser} />
-          )}
+          <LoginForm setUser={setUser} />
 
           <div className="my-4 flex items-center">
             <div className="flex-grow border-t border-gray-200"></div>
@@ -58,13 +56,14 @@ const Login = ({ setUser }) => {
             />
           </div>
 
+          {/* No account? Sign Up option */}
           <p className="text-sm text-center mt-4 text-gray-600">
-            {isSignUp ? "Already have an account?" : "No account?"}{" "}
+            No account?{" "}
             <button
-              onClick={() => setIsSignUp(!isSignUp)}
+              onClick={() => navigate("/signup")}
               className="text-blue-600 hover:underline"
             >
-              {isSignUp ? "Log In" : "Sign Up"}
+              Sign Up
             </button>
           </p>
         </div>

@@ -35,6 +35,7 @@ const SignUpForm = ({ setUser }) => {
           confirmPassword: "",
         });
         setUser({ email });
+        localStorage.setItem("user", JSON.stringify(email));
         navigate("/login");
       }
     } catch (error) {

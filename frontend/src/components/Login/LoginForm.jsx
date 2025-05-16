@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+
 
 const LoginForm = ({ setUser }) => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const LoginForm = ({ setUser }) => {
       else{
         console.log("Login:", loginData);
         setUser({ email: loginData.email });
+        localStorage.setItem("user", JSON.stringify({ email: loginData.email }));
         navigate("/home");
       }
     }

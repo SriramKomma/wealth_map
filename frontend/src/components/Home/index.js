@@ -3,6 +3,8 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import Sidebar from "../Sidebar";
 import "./index.css";
+import { useNavigate } from "react-router-dom";
+
 
 // Dummy property data
 const properties = [
@@ -99,6 +101,14 @@ const Home = ({ user }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const mapRef = useRef();
 
+  const navigate = useNavigate();
+
+    const handleLogout = () => {
+      localStorage.removeItem("user");
+      navigate("/login");
+      window.location.reload(); 
+    };
+
   return (
     <div className="min-h-screen bg-gray-100 relative">
       {/* Hamburger Icon for Mobile */}
@@ -128,9 +138,16 @@ const Home = ({ user }) => {
               <h1 className="text-2xl font-bold text-white">
                 Wealth<span className="text-gray-400">Map</span>
               </h1>
-              <div className="text-sm text-gray-400">
-                Welcome, {user?.email || "User"}
+              <div className="flex items-center gap-4 text-sm text-gray-400">
+                <span>Welcome, {user?.email || "User"}</span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 text-white px-3 py-1 rounded-md text-xs hover:bg-red-700 transition duration-200"
+                >
+                  Logout
+                </button>
               </div>
+
             </div>
           </header>
           <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
