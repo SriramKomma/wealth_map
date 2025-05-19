@@ -61,3 +61,7 @@ backend/.env
 # Build output
 dist/
 build/
+backend/data/*.csv 
+backend/data/*.json 
+frontend/src/components/data/*.csv 
+frontend/src/components/data/*.json

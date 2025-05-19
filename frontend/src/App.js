@@ -13,6 +13,7 @@ import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import {UserContextProvider} from "./context/userContext";
 import ProtectedRoute from "./components/Login/ProtectedRoute";
+import Profile from "./components/PopupPanel/Profile";
 
 axios.defaults.baseURL = "http://localhost:3001";
 axios.defaults.withCredentials = true;
@@ -56,6 +57,7 @@ function App() {
             }
           />
           <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </div>
     </Router>

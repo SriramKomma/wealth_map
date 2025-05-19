@@ -4,7 +4,8 @@ import L from "leaflet";
 import Sidebar from "../Sidebar";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-
+import { members } from "../data/members";
+import PopupPanel from "../PopupPanel/PopupPanelComponent";
 
 // Dummy property data
 const properties = [
@@ -25,55 +26,6 @@ const properties = [
     position: [40.758, -73.9855],
     address: "789 7th Ave, NY",
     price: "$1,200,000",
-  },
-];
-
-// Dummy member data
-const members = [
-  {
-    id: 1,
-    name: "John Doe",
-    position: [40.7128, -74.006],
-    netWorth: "$5,000,000",
-    company: "Doe Enterprises",
-    industry: "Real Estate",
-    role: "CEO",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    position: [40.7282, -73.986],
-    netWorth: "$2,500,000",
-    company: "Smith Ventures",
-    industry: "Tech",
-    role: "CTO",
-  },
-  {
-    id: 3,
-    name: "Alice Johnson",
-    position: [40.758, -73.9855],
-    netWorth: "$3,000,000",
-    company: "Johnson Holdings",
-    industry: "Finance",
-    role: "CFO",
-  },
-  {
-    id: 4,
-    name: "Bob Brown",
-    position: [40.7306, -73.9352],
-    netWorth: "$1,200,000",
-    company: "Brown Innovations",
-    industry: "Tech",
-    role: "Product Manager",
-  },
-  {
-    id: 5,
-    name: "Charlie Green",
-    position: [40.7495, -73.9874],
-    netWorth: "$4,500,000",
-    company: "Green Investments",
-    industry: "Real Estate",
-    role: "Investor",
   },
 ];
 
@@ -109,6 +61,10 @@ const Home = ({ user }) => {
       window.location.reload(); 
     };
 
+
+    const handleViewProfile = (member) => {
+        navigate(`/profile/${member.id}`, { state: { member } });
+      };
   return (
     <div className="min-h-screen bg-gray-100 relative">
       {/* Hamburger Icon for Mobile */}
@@ -191,56 +147,11 @@ const Home = ({ user }) => {
                 ))}
               </MapContainer>
             </div>
-            {selectedItem && (
-              <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow-md animate-fadeIn">
-                {selectedItem.address ? (
-                  <div>
-                    <h3 className="font-bold text-gray-900">
-                      {selectedItem.address}
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      Price: {selectedItem.price}
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <div className="flex items-center mb-2">
-                      <img
-                        src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-                          selectedItem.name
-                        )}&size=40&background=4b5563&color=fff`}
-                        alt={selectedItem.name}
-                        className="w-10 h-10 rounded-full mr-2"
-                      />
-                      <h3 className="font-bold text-gray-900">
-                        {selectedItem.name}
-                      </h3>
-                    </div>
-                    <p className="text-sm text-gray-600">
-                      <span className="font-semibold">Net Worth:</span>{" "}
-                      {selectedItem.netWorth}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      <span className="font-semibold">Company:</span>{" "}
-                      {selectedItem.company}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      <span className="font-semibold">Industry:</span>{" "}
-                      {selectedItem.industry}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      <span className="font-semibold">Role:</span>{" "}
-                      {selectedItem.role}
-                    </p>
-                    <button
-                      className="mt-3 w-full bg-gray-700 text-gray-100 py-1 rounded-md text-sm hover:bg-gray-800 transition duration-200"
-                      onClick={() => alert("View Full Profile clicked!")}>
-                      View Full Profile
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
+            <PopupPanel
+              selectedItem={selectedItem}
+              onClose={() => setSelectedItem(null)}
+              onViewProfile={handleViewProfile}
+            />
           </main>
         </div>
       </div>

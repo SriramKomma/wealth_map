@@ -1,0 +1,12 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Explicitly declare line endings for files
+*.js text
+*.ts text
+*.json text
+*.css text
+*.html text
+*.csv text
+*.sh text eol=lf
+*.lock text
